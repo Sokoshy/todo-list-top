@@ -6,7 +6,51 @@
   <title>Todo List</title>
 </head>
 <body>
-  <!-- TODO: your UI structure here -->
-  <div id="app"></div>
+  <div class="app">
+    <!-- Sidebar: projects -->
+    <aside class="sidebar">
+      <h1 class="app-title">Todo List</h1>
+
+      <form class="project-form" data-project-form>
+        <input type="text" name="projectName" placeholder="Nouveau projet" required>
+        <button type="submit">Ajouter</button>
+      </form>
+
+      <ul class="project-list" data-project-list></ul>
+    </aside>
+
+    <!-- Main: todos of the selected project -->
+    <main class="main">
+      <header class="main-header">
+        <h2 data-current-project>Default</h2>
+        <p data-todo-count></p>
+      </header>
+
+      <form class="todo-form" data-todo-form>
+        <input type="text" name="title" placeholder="Titre de la todo" required>
+        <input type="text" name="description" placeholder="Description">
+        <input type="date" name="dueDate">
+        <select name="priority">
+          <option value="low">Basse</option>
+          <option value="medium" selected>Moyenne</option>
+          <option value="high">Haute</option>
+        </select>
+        <button type="submit">Ajouter la todo</button>
+      </form>
+
+      <ul class="todo-list" data-todo-list></ul>
+    </main>
+  </div>
+
+  <!-- Todo detail -->
+  <dialog class="todo-dialog" data-todo-dialog>
+    <form method="dialog">
+      <h3 data-dialog-title></h3>
+      <p data-dialog-description></p>
+      <p data-dialog-due-date></p>
+      <p data-dialog-priority></p>
+      <button value="close">Fermer</button>
+    </form>
+  </dialog>
 </body>
 </html>
