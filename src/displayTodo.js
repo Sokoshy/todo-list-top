@@ -41,7 +41,17 @@ const renderTodoItem = (todo) => {
   priority.classList.add("todo-priority");
   priority.textContent = todo.priority;
 
-  li.append(checkbox, title, dueDate, priority);
+li.append(checkbox, title, dueDate, priority);
+
+  // Progress badge when a checklist exists: clickable, opens the detail dialog
+  if (todo.checklist !== null) {
+    const checked = todo.checklist.filter((item) => item.done).length;
+    const badge = document.createElement("span");
+    badge.classList.add("todo-checklist-badge");
+    badge.textContent = `☑ ${checked}/${todo.checklist.length}`;
+    badge.dataset.action = "expand";
+    li.append(badge);
+  }
 
   // Notes stay collapsed in the list, they unfold in the detail dialog
   if (todo.note) {

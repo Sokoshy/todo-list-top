@@ -206,7 +206,7 @@ body {
 
 .todo-item {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto auto;
   align-items: center;
   gap: 0.8rem;
   padding: 0.8rem 1rem;
@@ -278,6 +278,21 @@ body {
 
 .priority-low .todo-priority {
   color: var(--low);
+}
+.todo-checklist-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.todo-checklist-badge:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .todo-note {
