@@ -1,3 +1,24 @@
+/* Carnet de bord — paper, ink, one vermillion accent */
+
+:root {
+  --paper: #f6f1e7;
+  --paper-deep: #efe7d6;
+  --card: #fdfbf5;
+  --ink: #23201a;
+  --ink-soft: #6f675a;
+  --ink-faint: #a89e8d;
+  --line: #e2d9c4;
+  --accent: #c2401f;
+  --accent-ink: #fffdf8;
+  --sidebar: #26221b;
+  --sidebar-ink: #ece5d3;
+  --sidebar-dim: #a79d86;
+  --high: #c2401f;
+  --medium: #b07d1e;
+  --low: #5f7f5a;
+  --radius: 8px;
+}
+
 *,
 *::before,
 *::after {
@@ -6,100 +27,145 @@
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  color: #1f2430;
-  background: #f5f6f8;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
 }
 
 .app {
   display: grid;
-  grid-template-columns: 260px 1fr;
+  grid-template-columns: 280px 1fr;
   min-height: 100vh;
 }
 
-/* Sidebar */
+/* ---------- Sidebar ---------- */
+
 .sidebar {
-  padding: 1.5rem 1rem;
-  background: #21252f;
-  color: #e8eaf0;
+  padding: 2rem 1.25rem;
+  background: var(--sidebar);
+  color: var(--sidebar-ink);
 }
 
 .app-title {
-  margin: 0 0 1.25rem;
-  font-size: 1.25rem;
+  margin: 0 0 0.25rem;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  font-size: 1.9rem;
+  letter-spacing: 0.01em;
+}
+
+.sidebar .app-title::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: 0.6rem;
+  background: var(--accent);
 }
 
 .project-form {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin: 1.5rem 0 1.25rem;
 }
 
 .project-form input {
   flex: 1;
   min-width: 0;
+  background: transparent;
+  color: var(--sidebar-ink);
+  border: 1px solid #4a4335;
+}
+
+.project-form input::placeholder {
+  color: var(--sidebar-dim);
 }
 
 .project-form input,
-.project-form button,
 .todo-form input,
-.todo-form select,
-.todo-form button {
-  padding: 0.5rem 0.6rem;
+.todo-form select {
+  padding: 0.55rem 0.7rem;
   font: inherit;
-  border: 1px solid #444b5c;
-  border-radius: 4px;
+  font-size: 0.9rem;
+  border-radius: var(--radius);
 }
 
 .project-form button,
-.todo-form button {
+.todo-form button,
+.checklist-form button,
+.dialog-edit button {
+  padding: 0.55rem 0.9rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  background: #3d7eff;
-  border-color: #3d7eff;
-  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--accent-ink);
+  white-space: nowrap;
+}
+
+.project-form button:hover,
+.todo-form button:hover,
+.checklist-form button:hover,
+.dialog-edit button:hover {
+  filter: brightness(1.08);
 }
 
 .project-list {
   margin: 0;
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .project-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0.6rem;
-  border-radius: 4px;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: var(--radius);
   cursor: pointer;
+  font-weight: 500;
+  border-left: 3px solid transparent;
 }
 
 .project-item:hover {
-  background: #2c3240;
+  background: #322d23;
 }
 
 .project-item.is-selected {
-  background: #3d7eff;
-  color: #fff;
+  background: #322d23;
+  border-left-color: var(--accent);
 }
 
 .project-count {
-  font-size: 0.8rem;
-  opacity: 0.7;
+  font-size: 0.78rem;
+  color: var(--sidebar-dim);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Main */
+/* ---------- Main column ---------- */
+
 .main {
-  padding: 1.5rem 2rem;
+  padding: 2.5rem 3rem;
+  max-width: 880px;
 }
 
 .main-header h2 {
   margin: 0;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  font-size: 2.4rem;
 }
 
 [data-todo-count] {
-  margin: 0.25rem 0 1.5rem;
-  color: #6b7280;
+  margin: 0.3rem 0 1.75rem;
+  color: var(--ink-soft);
   font-size: 0.9rem;
 }
 
@@ -107,7 +173,26 @@ body {
   display: grid;
   grid-template-columns: 2fr 2fr 2fr 1fr 1fr auto;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
+  padding: 0.9rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.todo-form input,
+.todo-form select {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.todo-form input:focus,
+.todo-form select:focus,
+.project-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+  border-color: transparent;
 }
 
 .todo-list {
@@ -116,90 +201,136 @@ body {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .todo-item {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  background: #fff;
-  border-left: 4px solid #9aa1ae;
-  border-radius: 4px;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink-faint);
+  border-radius: var(--radius);
 }
 
 .todo-item.priority-high {
-  border-left-color: #d64545;
+  border-left-color: var(--high);
 }
 
 .todo-item.priority-medium {
-  border-left-color: #d99b28;
+  border-left-color: var(--medium);
 }
 
 .todo-item.priority-low {
-  border-left-color: #6b9c6b;
+  border-left-color: var(--low);
+}
+
+.todo-checkbox {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
 .todo-title {
+  font-weight: 600;
   cursor: pointer;
+}
+
+.todo-title:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
 }
 
 .todo-title.is-done {
   text-decoration: line-through;
-  color: #9aa1ae;
+  color: var(--ink-faint);
+  font-weight: 400;
 }
 
-.todo-due-date,
-.todo-priority {
+.todo-due-date {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.todo-priority {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid currentcolor;
+}
+
+.priority-high .todo-priority {
+  color: var(--high);
+}
+
+.priority-medium .todo-priority {
+  color: var(--medium);
+}
+
+.priority-low .todo-priority {
+  color: var(--low);
 }
 
 .todo-note {
   grid-column: 1 / -1;
-  margin: 0.25rem 0 0;
-  font-size: 0.85rem;
-  color: #6b7280;
+  margin: 0.2rem 0 0 2rem;
+  font-size: 0.87rem;
+  font-style: italic;
+  color: var(--ink-soft);
 }
 
-/* Dialog */
+/* ---------- Dialog ---------- */
+
 .todo-dialog {
-  border: none;
-  border-radius: 6px;
-  padding: 1.5rem;
-  max-width: 420px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.75rem;
+  width: min(460px, 90vw);
+  background: var(--card);
+  color: var(--ink);
 }
 
 .todo-dialog::backdrop {
-  background: rgb(0 0 0 / 45%);
+  background: rgb(35 32 26 / 50%);
 }
 
-.delete-todo {
-  padding: 0.5rem 0.8rem;
-  font: inherit;
-  color: #fff;
-  background: #d64545;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.dialog-detail h3 {
+  margin: 0 0 0.4rem;
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  font-size: 1.6rem;
 }
 
-/* Dialog detail + edit */
-.todo-dialog h4 {
-  margin: 1.25rem 0 0.5rem;
-  font-size: 0.95rem;
-  color: #6b7280;
+.dialog-detail p {
+  margin: 0.25rem 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
 }
 
 [data-dialog-note] {
   font-style: italic;
-  color: #6b7280;
+}
+
+.todo-dialog h4 {
+  margin: 1.4rem 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
 }
 
 .dialog-checklist ul {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.6rem;
   padding: 0;
   list-style: none;
 }
@@ -207,27 +338,41 @@ body {
 .checklist-item {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0;
+  gap: 0.6rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed var(--line);
+}
+
+.checklist-item input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
 .checklist-item .is-done {
   text-decoration: line-through;
-  color: #9aa1ae;
+  color: var(--ink-faint);
 }
 
 .checklist-item button {
   margin-left: auto;
   border: none;
   background: none;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  line-height: 1;
   cursor: pointer;
-  color: #9aa1ae;
+  color: var(--ink-faint);
+}
+
+.checklist-item button:hover {
+  color: var(--high);
 }
 
 .checklist-empty {
   font-size: 0.9rem;
-  color: #9aa1ae;
+  font-style: italic;
+  color: var(--ink-faint);
 }
 
 .checklist-form {
@@ -247,31 +392,74 @@ body {
 }
 
 .checklist-form input,
-.checklist-form button,
 .dialog-edit input,
-.dialog-edit select,
-.dialog-edit button {
-  padding: 0.5rem 0.6rem;
+.dialog-edit select {
+  padding: 0.55rem 0.7rem;
   font: inherit;
-  border: 1px solid #444b5c;
-  border-radius: 4px;
-}
-
-.checklist-form button,
-.dialog-edit button {
-  cursor: pointer;
-  background: #3d7eff;
-  border-color: #3d7eff;
-  color: #fff;
+  font-size: 0.9rem;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
 }
 
 .dialog-actions {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  margin-top: 1.25rem;
+  margin-top: 1.4rem;
 }
 
 .dialog-actions form {
   margin: 0;
+}
+
+.delete-todo {
+  padding: 0.55rem 0.9rem;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--high);
+  background: transparent;
+  border: 1px solid var(--high);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.delete-todo:hover {
+  background: var(--high);
+  color: var(--accent-ink);
+}
+
+.dialog-actions form button {
+  padding: 0.55rem 0.9rem;
+  font: inherit;
+  font-size: 0.9rem;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--ink);
+}
+
+@media (max-width: 800px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .todo-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none;
+  }
 }
