@@ -1,21 +1,21 @@
 /* Carnet de bord — paper, ink, one vermillion accent */
 
 :root {
-  --paper: #f6f1e7;
-  --paper-deep: #efe7d6;
-  --card: #fdfbf5;
-  --ink: #23201a;
-  --ink-soft: #6f675a;
-  --ink-faint: #a89e8d;
-  --line: #e2d9c4;
-  --accent: #c2401f;
+--paper: #f4f3ee;
+  --paper-deep: #e9e7de;
+  --card: #fdfdfb;
+  --ink: #1e2430;
+  --ink-soft: #5d6675;
+  --ink-faint: #9aa1ad;
+  --line: #dcd9cf;
+  --accent: #d0601a;
   --accent-ink: #fffdf8;
-  --sidebar: #26221b;
-  --sidebar-ink: #ece5d3;
-  --sidebar-dim: #a79d86;
-  --high: #c2401f;
-  --medium: #b07d1e;
-  --low: #5f7f5a;
+  --sidebar: #1c2333;
+  --sidebar-ink: #e9eaf0;
+  --sidebar-dim: #8e97a8;
+  --high: #b34020;
+  --medium: #c07f14;
+  --low: #4f7a68;
   --radius: 8px;
 }
 
@@ -74,7 +74,7 @@ body {
   min-width: 0;
   background: transparent;
   color: var(--sidebar-ink);
-  border: 1px solid #4a4335;
+  border: 1px solid #3a455c;
 }
 
 .project-form input::placeholder {
@@ -135,11 +135,11 @@ body {
 }
 
 .project-item:hover {
-  background: #322d23;
+  background: #2a3347;
 }
 
 .project-item.is-selected {
-  background: #322d23;
+  background: #2a3347;
   border-left-color: var(--accent);
 }
 
