@@ -41,7 +41,8 @@ todoForm.addEventListener("submit", (event) => {
   const data = new FormData(todoForm);
   projectsManager.addTodo(getCurrentProjectId(), {
     title: data.get("title").trim(),
-    description: data.get("description").trim(),
+description: data.get("description").trim(),
+    note: data.get("note").trim(),
     // The input gives "2026-10-05", which is not a Date: build one from the string
     dueDate: data.get("dueDate") ? new Date(data.get("dueDate")) : new Date(),
     priority: data.get("priority"),
@@ -85,13 +86,70 @@ todoList.addEventListener("click", (event) => {
 const todoDialog = document.querySelector("[data-todo-dialog]");
 
 todoDialog.addEventListener("click", (event) => {
-  if (event.target.dataset.action !== "delete") {
+  const action = event.target.dataset.action;
+  const todoId = todoDialog.dataset.todoId;
+
+  if (action === "delete") {
+    projectsManager.deleteTodo(getCurrentProjectId(), todoId);
+    saveProjects();
+    todoDialog.close();
+    render();
     return;
   }
 
-  projectsManager.deleteTodo(getCurrentProjectId(), todoDialog.dataset.todoId);
+  // Checklist item position inside the todo: read from the clicked element
+  const index = Number(event.target.dataset.checklistIndex);
+
+  if (action === "toggle-checklist-item") {
+    projectsManager.toggleChecklistItem(getCurrentProjectId(), todoId, index);
+    saveProjects();
+    openTodoDialog(findTodo(todoId));
+    render();
+    return;
+  }
+
+  if (action === "delete-checklist-item") {
+    projectsManager.deleteChecklistItem(getCurrentProjectId(), todoId, index);
+    saveProjects();
+    openTodoDialog(findTodo(todoId));
+    render();
+  }
+});
+
+const checklistForm = document.querySelector("[data-checklist-form]");
+
+checklistForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const data = new FormData(checklistForm);
+  projectsManager.addChecklistItem(
+    getCurrentProjectId(),
+    todoDialog.dataset.todoId,
+    data.get("checklistItem").trim()
+  );
+
+  checklistForm.reset();
   saveProjects();
-  todoDialog.close();
+  openTodoDialog(findTodo(todoDialog.dataset.todoId));
+  render();
+});
+
+const editForm = document.querySelector("[data-edit-form]");
+
+editForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const data = new FormData(editForm);
+  projectsManager.updateTodo(getCurrentProjectId(), todoDialog.dataset.todoId, {
+    title: data.get("title").trim(),
+    description: data.get("description").trim(),
+    note: data.get("note").trim(),
+    priority: data.get("priority"),
+    dueDate: data.get("dueDate") ? new Date(data.get("dueDate")) : new Date(),
+  });
+
+  saveProjects();
+  openTodoDialog(findTodo(todoDialog.dataset.todoId));
   render();
 });
 // Rebuild real Todos from storage before the first render. After load,

@@ -58,8 +58,86 @@ const toggleTodo = (projectId, todoId) => {
     const [deleted] = project.todos.splice(index, 1);
     return deleted;
   };
+const addChecklistItem = (projectId, todoId, texte) => {
+    const project = getProjectById(projectId);
+    if (project === null) {
+      return null;
+    }
+    const todo = project.todos.find((item) => item.id === todoId);
+    if (todo === undefined) {
+      return null;
+    }
+    // First item ever: the absent checklist becomes an existing one
+    if (todo.checklist === null) {
+      todo.checklist = [];
+    }
+    const item = { texte, done: false };
+    todo.checklist.push(item);
+    return item;
+  };
 
-  const addProject = (name) => {
+  const toggleChecklistItem = (projectId, todoId, index) => {
+    const project = getProjectById(projectId);
+    if (project === null) {
+      return null;
+    }
+    const todo = project.todos.find((item) => item.id === todoId);
+    if (todo === undefined || todo.checklist === null) {
+      return null;
+    }
+    const item = todo.checklist[index];
+    if (item === undefined) {
+      return null;
+    }
+    item.done = !item.done;
+    return item;
+  };
+
+  const deleteChecklistItem = (projectId, todoId, index) => {
+    const project = getProjectById(projectId);
+    if (project === null) {
+      return null;
+    }
+    const todo = project.todos.find((item) => item.id === todoId);
+    if (todo === undefined || todo.checklist === null) {
+      return null;
+    }
+    if (index < 0 || index >= todo.checklist.length) {
+      return null;
+    }
+    const [deleted] = todo.checklist.splice(index, 1);
+    return deleted;
+  };
+
+  const updateTodo = (projectId, todoId, updates) => {
+    const project = getProjectById(projectId);
+    if (project === null) {
+      return null;
+    }
+    const todo = project.todos.find((item) => item.id === todoId);
+    if (todo === undefined) {
+      return null;
+    }
+    // Only known fields pass through: the display cannot invent properties
+    if (updates.title !== undefined) {
+      todo.title = updates.title;
+    }
+    if (updates.description !== undefined) {
+      todo.description = updates.description;
+    }
+    if (updates.note !== undefined) {
+      todo.note = updates.note;
+    }
+    if (updates.priority !== undefined) {
+      todo.priority = updates.priority;
+    }
+    if (updates.dueDate !== undefined) {
+      todo.dueDate = updates.dueDate;
+    }
+    return todo;
+  };
+
+const addProject = (name) => {
     const nameTaken = projects.some((project) => project.name === name);
     if (nameTaken) {
       return null;
@@ -79,7 +157,9 @@ const addTodo = (projectId, todoData) => {
     todoData.title,
     todoData.description,
     todoData.dueDate,
-    todoData.priority,
+todoData.priority,
+    todoData.note ?? "",
+    todoData.checklist ?? null
   );
 
   project.todos.push(todo);
@@ -93,7 +173,11 @@ getProjects,
     addProject,
     addTodo,
     toggleTodo,
-deleteTodo
+deleteTodo,
+    addChecklistItem,
+    toggleChecklistItem,
+    deleteChecklistItem,
+    updateTodo
   };
 })();
 
