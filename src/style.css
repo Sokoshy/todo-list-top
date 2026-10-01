@@ -1,1 +1,188 @@
-/* Your styles here */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #1f2430;
+  background: #f5f6f8;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  padding: 1.5rem 1rem;
+  background: #21252f;
+  color: #e8eaf0;
+}
+
+.app-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.25rem;
+}
+
+.project-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.project-form input {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-form input,
+.project-form button,
+.todo-form input,
+.todo-form select,
+.todo-form button {
+  padding: 0.5rem 0.6rem;
+  font: inherit;
+  border: 1px solid #444b5c;
+  border-radius: 4px;
+}
+
+.project-form button,
+.todo-form button {
+  cursor: pointer;
+  background: #3d7eff;
+  border-color: #3d7eff;
+  color: #fff;
+}
+
+.project-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.project-item:hover {
+  background: #2c3240;
+}
+
+.project-item.is-selected {
+  background: #3d7eff;
+  color: #fff;
+}
+
+.project-count {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Main */
+.main {
+  padding: 1.5rem 2rem;
+}
+
+.main-header h2 {
+  margin: 0;
+}
+
+[data-todo-count] {
+  margin: 0.25rem 0 1.5rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.todo-form {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr auto;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.todo-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.todo-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: #fff;
+  border-left: 4px solid #9aa1ae;
+  border-radius: 4px;
+}
+
+.todo-item.priority-high {
+  border-left-color: #d64545;
+}
+
+.todo-item.priority-medium {
+  border-left-color: #d99b28;
+}
+
+.todo-item.priority-low {
+  border-left-color: #6b9c6b;
+}
+
+.todo-title {
+  cursor: pointer;
+}
+
+.todo-title.is-done {
+  text-decoration: line-through;
+  color: #9aa1ae;
+}
+
+.todo-due-date,
+.todo-priority {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.todo-note {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Dialog */
+.todo-dialog {
+  border: none;
+  border-radius: 6px;
+  padding: 1.5rem;
+  max-width: 420px;
+}
+
+.todo-dialog::backdrop {
+  background: rgb(0 0 0 / 45%);
+}
+
+.delete-todo {
+  margin-right: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  font: inherit;
+  color: #fff;
+  background: #d64545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
