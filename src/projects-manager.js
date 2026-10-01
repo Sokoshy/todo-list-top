@@ -7,7 +7,16 @@ const projectsManager = (() => {
 
   projects.push(defaultProject);
 
-  const getProjects = () => projects;
+const getProjects = () => projects;
+
+  // Why replace the content instead of the array: getProjects hands out
+  // the live array, so emptying and refilling it keeps every reader in sync
+  const setProjects = (newProjects) => {
+    projects.length = 0;
+    newProjects.forEach((project) => {
+      projects.push(project);
+    });
+  };
 
   const getProjectById = (id) => {
      const project = projects.find((project) => project.id === id );
@@ -78,7 +87,8 @@ const addTodo = (projectId, todoData) => {
 };
 
   return {
-    getProjects,
+getProjects,
+    setProjects,
     getProjectById,
     addProject,
     addTodo,

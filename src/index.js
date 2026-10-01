@@ -1,6 +1,7 @@
 import "./style.css";
 import { projectsManager } from "./projects-manager.js";
 import { render, setCurrentProjectId, getCurrentProjectId, openTodoDialog } from "./displayTodo.js";
+import { saveProjects, loadProjects } from "./storage.js";
 
 const projectForm = document.querySelector("[data-project-form]");
 const todoForm = document.querySelector("[data-todo-form]");
@@ -30,6 +31,7 @@ projectForm.addEventListener("submit", (event) => {
 
   projectForm.reset();
   setCurrentProjectId(project.id);
+  saveProjects();
   render();
 });
 
@@ -46,6 +48,7 @@ todoForm.addEventListener("submit", (event) => {
   });
 
   todoForm.reset();
+  saveProjects();
   render();
 });
 
@@ -69,6 +72,7 @@ todoList.addEventListener("click", (event) => {
 
   if (action === "toggle") {
     projectsManager.toggleTodo(getCurrentProjectId(), todoId);
+    saveProjects();
   }
 
   if (action === "expand") {
@@ -86,7 +90,15 @@ todoDialog.addEventListener("click", (event) => {
   }
 
   projectsManager.deleteTodo(getCurrentProjectId(), todoDialog.dataset.todoId);
+  saveProjects();
   todoDialog.close();
   render();
 });
+// Rebuild real Todos from storage before the first render. After load,
+// the shown project may be a revived one, no longer the initial default.
+loadProjects();
+
+if (projectsManager.getProjectById(getCurrentProjectId()) === null) {
+  setCurrentProjectId(projectsManager.getProjects()[0].id);
+}
 render();
